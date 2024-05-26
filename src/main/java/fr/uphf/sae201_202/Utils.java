@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
@@ -52,13 +53,21 @@ public class Utils {
         arrow.setLayoutY(layoutY);
         arrow.setLayoutX(layoutX);
         arrow.setOnMouseClicked(event -> {
-            actionMoving(bot, action);
             if(inTour) {
                 System.out.println("ACTION DONE : MOVED\nGO TO NEXT BOT");
                 SAE.get().getTour().getBotInTour().remove(bot);
                 Cell cell = SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX());
-                Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                        }
+                    },
+                    TimeUnit.SECONDS.toMillis(1)
+                );
             }
+            actionMoving(bot, action);
         });
 
         return arrow;

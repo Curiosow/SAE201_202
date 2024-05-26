@@ -62,6 +62,9 @@ public class Tour extends Application {
                 if(botInTour.isEmpty()) {
                     inTour = false;
                     System.out.println("TOUR FINISH");
+                    for(Cell cell : SAE.get().getMap().getGrid().getAllCells()) {
+                        cell.getStyleClass().remove("flash");
+                    }
                     return;
                 }
                 Bot bot = botInTour.getFirst();
@@ -93,7 +96,15 @@ public class Tour extends Application {
                         Utils.elementRunning(bot, SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX()));
                         System.out.println("ACTION DONE : MINED\nGO TO NEXT BOT");
                         botInTour.remove(bot);
-                        Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                        new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                                }
+                            },
+                            TimeUnit.SECONDS.toMillis(1)
+                        );
                     });
                 }
                 if(storing) {
@@ -102,7 +113,15 @@ public class Tour extends Application {
                         Utils.elementRunning(bot, SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX()));
                         System.out.println("ACTION DONE : STORED\nGO TO NEXT BOT");
                         botInTour.remove(bot);
-                        Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                        new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    Platform.runLater(() -> cell.getStyleClass().remove("flash"));
+                                }
+                            },
+                            TimeUnit.SECONDS.toMillis(1)
+                        );
                     });
                 }
 
