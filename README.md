@@ -1,4 +1,4 @@
-# ⚠︎ Ancien repo. ayant eu un souci, nous avons du le re-créer ⚠︎
+# ⚠︎ L'ancien repo. ayant eu un souci, nous avons du le re-créer ⚠︎
 
 # S2.02
 
