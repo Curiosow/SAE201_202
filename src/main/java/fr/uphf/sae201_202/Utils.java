@@ -81,7 +81,6 @@ public class Utils {
     public static void actionMoving(Bot bot, String action) {
         Grid grid = SAE.get().getMap().getGrid();
         Cell cell = grid.getCell(bot.getPosY(), bot.getPosX());
-        cell.setId(null);
 
         String[] actionParts = action.split("/");
         String axis = actionParts[0];
@@ -114,6 +113,7 @@ public class Utils {
         newCell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/bot.png",64,64,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
+
         newCell.setOnMouseClicked(event -> {
             try {
                 bot.start(new Stage());
@@ -122,7 +122,7 @@ public class Utils {
             }
         });
         newCell.setId("bot");
-        bot.setPos(newCell.getColumn(), newCell.getRow());
+        bot.setPos(newCell.getRow(), newCell.getColumn());
     }
 
     public static Cell move(Bot bot, String axis, String direction, Cell cell, Grid grid) {
