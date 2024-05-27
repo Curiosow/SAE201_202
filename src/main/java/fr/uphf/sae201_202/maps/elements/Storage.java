@@ -33,4 +33,5 @@ public class Storage extends Element {
     public String toString() {
         return "Storage";
     }
+
 }

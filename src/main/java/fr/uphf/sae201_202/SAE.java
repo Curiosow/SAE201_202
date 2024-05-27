@@ -114,6 +114,10 @@ public class SAE extends Application {
         launch();
     }
 
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
     public Map getMap() {
         return map;
     }
