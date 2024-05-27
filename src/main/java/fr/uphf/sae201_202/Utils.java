@@ -3,6 +3,7 @@ package fr.uphf.sae201_202;
 import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.Grid;
 import fr.uphf.sae201_202.maps.elements.Element;
+import fr.uphf.sae201_202.maps.elements.ElementGUI;
 import fr.uphf.sae201_202.maps.elements.Mine;
 import fr.uphf.sae201_202.maps.elements.Storage;
 import javafx.application.Platform;
@@ -106,6 +107,13 @@ public class Utils {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
             cell.setElement(bot.getLastElement());
+            cell.setOnMouseClicked(event -> {
+                try {
+                    new ElementGUI(cell.getElement()).start(new Stage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
             bot.setLastElement(null);
         }
         if(newCell.getElement() != null)
