@@ -4,16 +4,14 @@ import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.Map;
 import fr.uphf.sae201_202.maps.elements.Ores;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,13 +32,24 @@ public class SAE extends Application {
         map = new Map();
 
         Pane group = new Pane();
-        FileInputStream fis_start = new FileInputStream("libs/img/start.png");
-        Image img_start = new Image(fis_start, 256, 256, true, true);
+        InputStream is_start = getClass().getResourceAsStream("/img/Start.png");
+        if(is_start == null) {
+            System.out.println("ERROR IN LOADING START BUTTON IMAGE");
+            System.exit(0);
+            return;
+        }
+        Image img_start = new Image(is_start, 256, 256, true, true);
         ImageView start = new ImageView(img_start);
         start.setY(30);
         start.setX(170);
 
-        Background background = new Background(new BackgroundImage(new Image("file:libs/img/backgroundmine.png", 626,316,false,true),
+        InputStream bgFile = getClass().getResourceAsStream("/img/backgroundmine.png");
+        if(bgFile == null) {
+            System.out.println("ERROR IN LOADING BACKGROUND IMAGE");
+            System.exit(0);
+            return;
+        }
+        Background background = new Background(new BackgroundImage(new Image(bgFile, 626,316,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT));
 
@@ -94,7 +103,14 @@ public class SAE extends Application {
     private void createBot(Ores ores) throws Exception {
         Cell cell = Utils.getRandomCell(map.getGrid());
         Bot bot = new Bot(ores);
-        cell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/bot.png",64,64,false,true),
+
+        InputStream file = SAE.get().getClass().getResourceAsStream("/img/bot.png");
+        if(file == null) {
+            System.out.println("ERROR IN LOADING BOT IMAGE");
+            System.exit(0);
+            return;
+        }
+        cell.setBackground(new Background(new BackgroundImage(new Image(file,64,64,false,true),
         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
           BackgroundSize.DEFAULT)));
         bots.add(bot);
@@ -105,6 +121,7 @@ public class SAE extends Application {
                 bot.start(new Stage());
             } catch (Exception e) {
                 System.out.println("THERE WAS A PROBLEM TO CREATE THE BOT GUI");
+                e.printStackTrace();
             }
         });
         System.out.println("PLACED A BOT OF " + cell.getRow() + "/" + cell.getColumn());

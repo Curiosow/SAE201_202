@@ -1,5 +1,6 @@
 package fr.uphf.sae201_202.maps;
 
+import fr.uphf.sae201_202.SAE;
 import fr.uphf.sae201_202.Tour;
 import fr.uphf.sae201_202.Utils;
 import fr.uphf.sae201_202.maps.elements.*;
@@ -10,7 +11,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +57,13 @@ public class Map {
     public void initMap(Stage stage) throws MalformedURLException {
         StackPane root = new StackPane();
         grid = new Grid(colonnes, lignes, width, height);
-        Background background = new Background(new BackgroundImage(new Image("file:libs/img/gameBackground.png", width,height,false,true),
+        InputStream bgFile = SAE.get().getClass().getResourceAsStream("/img/gameBackground.png");
+        if(bgFile == null) {
+            System.out.println("ERROR IN LOADING BACKGROUND IMAGE");
+            System.exit(0);
+            return;
+        }
+        Background background = new Background(new BackgroundImage(new Image(bgFile, width,height,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT));
 
@@ -71,7 +80,8 @@ public class Map {
 
         root.getChildren().addAll(grid);
         Scene scene = new Scene(root, width, height);
-        scene.getStylesheets().add(new File("libs/application.css").toURL().toExternalForm());
+        URL css = getClass().getResource("/application.css");
+        scene.getStylesheets().add(css.toExternalForm());
         stage.setTitle("Mineur de l'extrême");
         stage.setScene(scene);
     }

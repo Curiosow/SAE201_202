@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -41,13 +43,24 @@ public class Utils {
     }
 
     public static void setBackground(Cell cell, Element element) {
-        cell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/" + element.getImgLink(),64,64,false,true),
+        InputStream file = SAE.get().getClass().getResourceAsStream("/img/" + element.getImgLink());
+        if(file == null) {
+            System.out.println("ERROR IN LOADING BG IMAGE");
+            System.exit(0);
+            return;
+        }
+        cell.setBackground(new Background(new BackgroundImage(new Image(file,64,64,false,true),
         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
           BackgroundSize.DEFAULT)));
     }
 
     public static ImageView createArrow(Bot bot, boolean inTour, String imgName, String action, int layoutY, int layoutX) throws FileNotFoundException {
-        FileInputStream fis_arrow = new FileInputStream("libs/img/" + imgName);
+        InputStream fis_arrow = SAE.get().getClass().getResourceAsStream("/img/" + imgName);
+        if(fis_arrow == null) {
+            System.out.println("ERROR IN LOADING ARROW IMAGE");
+            System.exit(0);
+            return null;
+        }
         Image img_arrow = new Image(fis_arrow);
         ImageView arrow = new ImageView(img_arrow);
         arrow.setFitHeight(75);
@@ -103,7 +116,13 @@ public class Utils {
         cell.setOnMouseClicked(null);
 
         if(bot.getLastElement() != null) {
-            cell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/" + bot.getLastElement().getImgLink(),64,64,false,true),
+            InputStream fileArrow = SAE.get().getClass().getResourceAsStream("/img/" + bot.getLastElement().getImgLink());
+            if(fileArrow == null) {
+                System.out.println("ERROR IN LOADING ARROW IMAGE");
+                System.exit(0);
+                return;
+            }
+            cell.setBackground(new Background(new BackgroundImage(new Image(fileArrow,64,64,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
             cell.setElement(bot.getLastElement());
@@ -119,7 +138,13 @@ public class Utils {
         if(newCell.getElement() != null)
             bot.setLastElement(newCell.getElement());
 
-        newCell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/bot.png",64,64,false,true),
+        InputStream file = SAE.get().getClass().getResourceAsStream("/img/bot.png");
+        if(file == null) {
+            System.out.println("ERROR IN LOADING BOT IMAGE");
+            System.exit(0);
+            return;
+        }
+        newCell.setBackground(new Background(new BackgroundImage(new Image(file,64,64,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
 

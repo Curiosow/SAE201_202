@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SAE201_202:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SAE201_202_jar</output-path>
+    <root id="archive" name="SAE201_202.jar">
+      <element id="module-output" name="SAE201_202" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/22-ea+11/javafx-base-22-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/22-ea+11/javafx-fxml-22-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/22-ea+11/javafx-controls-22-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/22-ea+11/javafx-graphics-22-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/22-ea+11/javafx-controls-22-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/22-ea+11/javafx-graphics-22-ea+11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/dlsc/formsfx/formsfx-core/11.6.0/formsfx-core-11.6.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/22-ea+11/javafx-fxml-22-ea+11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/22-ea+11/javafx-base-22-ea+11.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.dlsc.formsfx:formsfx-core:11.6.0" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:22-ea+11" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:22-ea+11" />
+    </root>
+  </artifact>
+</component>
