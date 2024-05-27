@@ -105,6 +105,7 @@ public class Utils {
             cell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/" + bot.getLastElement().getImgLink(),64,64,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
+            cell.setElement(bot.getLastElement());
             bot.setLastElement(null);
         }
         if(newCell.getElement() != null)
