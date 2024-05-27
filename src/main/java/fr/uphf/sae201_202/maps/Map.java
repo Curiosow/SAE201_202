@@ -4,6 +4,7 @@ import fr.uphf.sae201_202.Tour;
 import fr.uphf.sae201_202.Utils;
 import fr.uphf.sae201_202.maps.elements.*;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -53,6 +54,11 @@ public class Map {
     public void initMap(Stage stage) throws MalformedURLException {
         StackPane root = new StackPane();
         grid = new Grid(colonnes, lignes, width, height);
+        Background background = new Background(new BackgroundImage(new Image("file:libs/img/bgtest.png", width,height,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT));
+
+        root.setBackground(background);
 
         for (int row = 0; row < lignes; row++) {
             for (int column = 0; column < colonnes; column++) {
