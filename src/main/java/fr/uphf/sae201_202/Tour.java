@@ -23,11 +23,13 @@ public class Tour extends Application {
     private int nbrTour;
     private boolean inTour;
     private List<Bot> botInTour;
+    private boolean hasDoneAction;
 
     private Button actionButton = null;
 
     public Tour() {
         this.nbrTour = 0;
+        this.hasDoneAction = false;
         this.inTour = false;
         this.botInTour = null;
         this.start(new Stage());
@@ -51,6 +53,7 @@ public class Tour extends Application {
             Label tourLabel = new Label("Tour n° " + nbrTour);
             tourLabel.setLayoutY(380);
             group.getChildren().add(tourLabel);
+            hasDoneAction = false;
 
             if(!inTour) {
                 Label noTourLabel = new Label("Aucun tour en cours.");
@@ -93,9 +96,13 @@ public class Tour extends Application {
                 if(mining) {
                     actionButton = new Button("Miner les ressources");
                     actionButton.setOnMouseClicked(event -> {
+                        if(hasDoneAction)
+                            return;
+
                         Utils.elementRunning(bot, SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX()));
                         System.out.println("ACTION DONE : MINED\nGO TO NEXT BOT");
                         botInTour.remove(bot);
+                        hasDoneAction = true;
                         new java.util.Timer().schedule(
                             new java.util.TimerTask() {
                                 @Override
@@ -110,9 +117,13 @@ public class Tour extends Application {
                 if(storing) {
                     actionButton = new Button("Ranger vos ressources");
                     actionButton.setOnMouseClicked(event -> {
+                        if(hasDoneAction)
+                            return;
+
                         Utils.elementRunning(bot, SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX()));
                         System.out.println("ACTION DONE : STORED\nGO TO NEXT BOT");
                         botInTour.remove(bot);
+                        hasDoneAction = true;
                         new java.util.Timer().schedule(
                             new java.util.TimerTask() {
                                 @Override
@@ -158,5 +169,11 @@ public class Tour extends Application {
     }
     public List<Bot> getBotInTour() {
         return botInTour;
+    }
+    public void setHasDoneAction(boolean hasDoneAction) {
+        this.hasDoneAction = hasDoneAction;
+    }
+    public boolean isHasDoneAction() {
+        return hasDoneAction;
     }
 }

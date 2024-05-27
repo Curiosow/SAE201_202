@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -54,8 +55,12 @@ public class Utils {
         arrow.setLayoutX(layoutX);
         arrow.setOnMouseClicked(event -> {
             if(inTour) {
+                if(SAE.get().getTour().isHasDoneAction())
+                    return;
+
                 System.out.println("ACTION DONE : MOVED\nGO TO NEXT BOT");
                 SAE.get().getTour().getBotInTour().remove(bot);
+                SAE.get().getTour().setHasDoneAction(true);
                 Cell cell = SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX());
                 new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -95,6 +100,7 @@ public class Utils {
 
         cell.setBackground(null);
         cell.setId(null);
+        cell.setOnMouseClicked(null);
 
         if(bot.getLastElement() != null) {
             cell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/" + bot.getLastElement().getImgLink(),64,64,false,true),
@@ -108,9 +114,15 @@ public class Utils {
         newCell.setBackground(new Background(new BackgroundImage(new Image("file:libs/img/bot.png",64,64,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
+        newCell.setOnMouseClicked(event -> {
+            try {
+                bot.start(new Stage());
+            } catch (Exception e) {
+                System.out.println("THERE WAS A PROBLEM TO CREATE THE BOT GUI");
+            }
+        });
         newCell.setId("bot");
-        bot.setPosY(newCell.getColumn());
-        bot.setPosX(newCell.getRow());
+        bot.setPos(newCell.getColumn(), newCell.getRow());
     }
 
     public static Cell move(Bot bot, String axis, String direction, Cell cell, Grid grid) {
