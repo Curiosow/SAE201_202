@@ -147,8 +147,8 @@ public class Tour extends Application {
 
                 try {
                     group.getChildren().addAll(idLabel, oreLabel, harvestLabel,
-                            Utils.createArrow(bot, true, "arrow-left.png", "Y/-", 125, 20),
-                            Utils.createArrow(bot, true, "arrow-right.png", "Y/+", 120, 175),
+                            Utils.createArrow(bot, true, "arrow-left.png", "Y/-", 125, 25),
+                            Utils.createArrow(bot, true, "arrow-right.png", "Y/+", 125, 175),
                             Utils.createArrow(bot, true, "arrow-up.png", "X/-", 50, 100),
                             Utils.createArrow(bot, true, "arrow-down.png", "X/+", 200, 100),
                             canMine, canStore
