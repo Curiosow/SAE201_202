@@ -38,6 +38,7 @@ public class SAE extends Application {
         ImageView start = new ImageView(img_start);
         start.setOnMouseClicked(event -> {
             Stage gameStage = new Stage();
+            gameStage.setOnCloseRequest(closeEvent -> System.exit(0));
             try {
                 map.initMap(gameStage);
 
