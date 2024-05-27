@@ -45,6 +45,10 @@ public class Tour extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            this.start(new Stage());
+        });
+
         Group group = new Group();
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
