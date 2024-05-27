@@ -51,6 +51,7 @@ public class ElementGUI extends Application {
         Scene scene = new Scene(group, 300, 300);
         stage.setTitle(this.element.toString());
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }

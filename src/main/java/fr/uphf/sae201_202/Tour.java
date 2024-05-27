@@ -162,6 +162,7 @@ public class Tour extends Application {
         Scene scene = new Scene(group, 300, 400);
         stage.setTitle("Tour");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

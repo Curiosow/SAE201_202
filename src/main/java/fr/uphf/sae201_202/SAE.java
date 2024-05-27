@@ -4,6 +4,7 @@ import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.Map;
 import fr.uphf.sae201_202.maps.elements.Ores;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -32,12 +33,22 @@ public class SAE extends Application {
         INSTANCE = this;
         map = new Map();
 
-        Group group = new Group();
+        Pane group = new Pane();
         FileInputStream fis_start = new FileInputStream("libs/img/start.png");
-        Image img_start = new Image(fis_start);
+        Image img_start = new Image(fis_start, 256, 256, true, true);
         ImageView start = new ImageView(img_start);
+        start.setY(30);
+        start.setX(170);
+
+        Background background = new Background(new BackgroundImage(new Image("file:libs/img/backgroundmine.png", 626,316,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT));
+
+        group.setBackground(background);
+
         start.setOnMouseClicked(event -> {
             Stage gameStage = new Stage();
+            gameStage.setResizable(false);
             gameStage.setOnCloseRequest(closeEvent -> System.exit(0));
             try {
                 map.initMap(gameStage);
@@ -61,6 +72,9 @@ public class SAE extends Application {
         group.getChildren().add(start);
         Scene scene = new Scene(group);
         stage.setScene(scene);
+        stage.setHeight(313);
+        stage.setWidth(626);
+        stage.setResizable(false);
         stage.show();
     }
 

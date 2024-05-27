@@ -133,6 +133,7 @@ public class Bot extends Application {
                 canMine, canStore);
         Scene scene = new Scene(group, 300, 400);
         stage.setTitle("Bot");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
