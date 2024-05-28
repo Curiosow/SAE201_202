@@ -22,12 +22,19 @@ public class Bot extends Application {
     private final int id;
     private int posX;
     private int posY;
+    /*
+    Quand le robot se déplace sur un élement, il est sauvegardé
+    ici pour le remettre quand il se déplace après
+    */
     private Element lastElement;
-
+    /*
+    Quand le robot peut miner ou stocker, le bouton sera actualisé
+    */
     private Button actionButton = null;
 
     private final int storageMax;
     private final Ores ores;
+    // nombre de minerais minés
     private int harvest;
 
     public Bot(Ores ores) {
@@ -99,8 +106,11 @@ public class Bot extends Application {
         Label canStore = new Label("Peut ranger : ");
         canStore.setLayoutY(320);
 
+        // Tache automatique qui met à jour le texte sur l'interface
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> Platform.runLater(() -> harvestLabel.setText("Stockage : " + harvest + "/" + storageMax)), 5, 5, TimeUnit.SECONDS);
+
+        // Tache automatique qui met à jour l'action du robot faisable
         scheduler.scheduleAtFixedRate(() -> Platform.runLater(() -> {
             boolean mining = lastElement != null && lastElement instanceof Mine;
             canMine.setText("Peut miner : " + (mining ? "Oui" : "Non"));

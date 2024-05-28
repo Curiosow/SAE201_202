@@ -6,6 +6,10 @@ public class Water extends Element {
 
     public Water() {
         setCanMoveIn(false);
+        /*
+        pour avoir un id qui fait +1 à chaque nouveau élement,
+        on récupère la taille de la liste et ça devient son id
+         */
         this.id = SAE.get().getMap().getWaters().size();
     }
 

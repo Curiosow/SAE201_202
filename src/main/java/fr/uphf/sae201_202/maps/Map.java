@@ -30,10 +30,12 @@ public class Map {
     private final int colonnes;
     private Grid grid;
 
+    // toutes les listes des différents élements
     private final List<Mine> mines;
     private final List<Water> waters;
     private final List<Storage> storages;
 
+    // nombres totaux des différents élements
     private int minesMax;
     private int watersMax;
 
@@ -63,12 +65,15 @@ public class Map {
             System.exit(0);
             return;
         }
+
+        // Définition de fond d'écran de la partie
         Background background = new Background(new BackgroundImage(new Image(bgFile, width,height,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT));
 
         root.setBackground(background);
 
+        // Création des cellules
         for (int row = 0; row < lignes; row++) {
             for (int column = 0; column < colonnes; column++) {
                 Cell cell = new Cell(column, row);
@@ -80,6 +85,7 @@ public class Map {
 
         root.getChildren().addAll(grid);
         Scene scene = new Scene(root, width, height);
+        // Définition du css de la scène
         URL css = getClass().getResource("/application.css");
         scene.getStylesheets().add(css.toExternalForm());
         stage.setTitle("Mineur de l'extrême");
@@ -88,6 +94,7 @@ public class Map {
 
     private void placeElements() {
         System.out.println("------- PLACING ELEMENTS -------");
+        // Création des deux premières mines
         createRandomMine(Ores.GOLD);
         createRandomMine(Ores.NICKEL);
 
@@ -102,6 +109,7 @@ public class Map {
             createRandomWater();
         }
 
+        // Création des deux premières stockages
         createRandomStorage(Ores.GOLD);
         createRandomStorage(Ores.NICKEL);
         System.out.println("--------------------------------");
@@ -110,6 +118,7 @@ public class Map {
     private void createRandomMine(Ores ores) {
         Cell cell = Utils.getRandomCell(grid);
         Mine mine = new Mine(ores);
+        // Lancement de l'interface de l'élement quand on clique dessus
         cell.setOnMouseClicked(event -> {
             try {
                 new ElementGUI(mine).start(new Stage());

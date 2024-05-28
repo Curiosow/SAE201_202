@@ -12,15 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
+    // Fonction permettant d'obtenir une cellule aléatoire vide
     public static Cell getRandomCell(Grid grid) {
         Random random = new Random();
         int tryed = 0;
@@ -42,6 +41,7 @@ public class Utils {
         }
     }
 
+    // Définit le fond d'un élement
     public static void setBackground(Cell cell, Element element) {
         InputStream file = SAE.get().getClass().getResourceAsStream("/img/" + element.getImgLink());
         if(file == null) {
@@ -54,6 +54,7 @@ public class Utils {
           BackgroundSize.DEFAULT)));
     }
 
+    // Créer un objet ImageView d'une flèche prête à être ajoutée dans une interface
     public static ImageView createArrow(Bot bot, boolean inTour, String imgName, String action, int layoutY, int layoutX) throws FileNotFoundException {
         InputStream fis_arrow = SAE.get().getClass().getResourceAsStream("/img/" + imgName);
         if(fis_arrow == null) {
@@ -92,6 +93,7 @@ public class Utils {
         return arrow;
     }
 
+    // Fonction permettant d'effectuer l'action de déplacement
     public static void actionMoving(Bot bot, String action) {
         Grid grid = SAE.get().getMap().getGrid();
         Cell cell = grid.getCell(bot.getPosY(), bot.getPosX());
@@ -106,15 +108,18 @@ public class Utils {
             return;
         }
 
+        // Si l'élement n'est pas nul et qu'on ne peut pas se déplacer dessus ou que c'est un bot qui est présent sur la cellule
         if((newCell.getElement() != null && !newCell.getElement().isCanMoveIn()) || (newCell.getId() != null && newCell.getId().equals("bot"))) {
             System.out.println("IMPOSSIBLE MOVING");
             return;
         }
 
+        // L'ancienne cellule est vidée
         cell.setBackground(null);
         cell.setId(null);
         cell.setOnMouseClicked(null);
 
+        // Ré-application de l'ancien élement sur la case
         if(bot.getLastElement() != null) {
             InputStream fileArrow = SAE.get().getClass().getResourceAsStream("/img/" + bot.getLastElement().getImgLink());
             if(fileArrow == null) {
@@ -159,6 +164,7 @@ public class Utils {
         bot.setPos(newCell.getRow(), newCell.getColumn());
     }
 
+    // Fonction permettant de récupérer la cellule par rapport à une cellule, l'axe, la direction et la grille
     public static Cell move(Bot bot, String axis, String direction, Cell cell, Grid grid) {
         int newPos;
         if(direction.equals("-")) {
@@ -175,6 +181,7 @@ public class Utils {
         return grid.getCell(axis.equals("Y") ? newPos : bot.getPosY(), axis.equals("Y") ? bot.getPosX() : newPos);
     }
 
+    // Fonction lançant le runner d'un élement
     public static void elementRunning(Bot bot, Cell cell) {
         if(cell.getElement() == null)
             return;
@@ -187,6 +194,7 @@ public class Utils {
         }
     }
 
+    // Fonction de l'action de miner
     public static void handleMining(Bot bot, Mine mine) {
         if(!mine.getOres().equals(bot.getOres())) {
             System.out.println("MINING: IMPOSSIBLE! DIFFERENT TYPE.");
@@ -211,6 +219,7 @@ public class Utils {
         System.out.println("MINING: DONE!");
     }
 
+    // Fonction de l'action d'enregistrer dans l'entrepôt
     public static void handleStoring(Bot bot, Storage storage) {
         if(!storage.getOres().equals(bot.getOres()) || bot.getHarvest() == 0) {
             System.out.println("STORAGING: IMPOSSIBLE!");

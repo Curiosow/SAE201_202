@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Mine extends Element {
 
+    // nombre de minerais restants dans la mine
     private int oreLess;
     private final Ores ores;
 
@@ -17,6 +18,7 @@ public class Mine extends Element {
 
     @Override
     public String getImgLink() {
+        // image de référence à la mine
         return "mine.png";
     }
 
@@ -31,6 +33,7 @@ public class Mine extends Element {
         this.oreLess = oreLess;
     }
     public void setRandomAmount() {
+        // définition du nombre de minerais entre 50 et 100
         Random random = new Random();
         int amount = random.nextInt(50);
         oreLess = amount + 50;

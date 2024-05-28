@@ -32,6 +32,7 @@ public class ElementGUI extends Application {
             ore.setLayoutY(20);
             Label ores = new Label("Quantité : " + mine.getOreLess());
             ores.setLayoutY(40);
+            // Actualisateur automatique des textes toutes les secondes
             ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             scheduler.scheduleAtFixedRate(() -> Platform.runLater(() -> ores.setText("Quantité : " + mine.getOreLess())), 5, 5, TimeUnit.SECONDS);
             group.getChildren().addAll(ore, ores);

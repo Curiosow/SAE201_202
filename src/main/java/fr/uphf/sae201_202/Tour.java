@@ -57,6 +57,11 @@ public class Tour extends Application {
             Label tourLabel = new Label("Tour n° " + nbrTour);
             tourLabel.setLayoutY(380);
             group.getChildren().add(tourLabel);
+
+            /*
+            Permet d'empêcher un robot d'effectuer plusieurs une fois action quand c'est à lui
+            le temps de l'actualisation
+            */
             hasDoneAction = false;
 
             if(!inTour) {
@@ -76,6 +81,8 @@ public class Tour extends Application {
                 }
                 Bot bot = botInTour.getFirst();
                 Cell cell = SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX());
+
+                // 'flash' permet de reconnaitre quel bot nous contrôlons
                 if(cell.getStyleClass().contains("flash"))
                     cell.getStyleClass().remove("flash");
                 else
@@ -107,6 +114,7 @@ public class Tour extends Application {
                         System.out.println("ACTION DONE : MINED\nGO TO NEXT BOT");
                         botInTour.remove(bot);
                         hasDoneAction = true;
+                        // On attend une seconde avant de retirer le 'flash' pour être sûr qu'il disparaisse
                         new java.util.Timer().schedule(
                             new java.util.TimerTask() {
                                 @Override

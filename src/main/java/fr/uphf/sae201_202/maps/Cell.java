@@ -7,6 +7,7 @@ public class Cell extends StackPane {
 
     private int column;
     private int row;
+    // Element présent sur la cellule
     private Element element;
 
     public Cell(int column, int row) {
@@ -14,12 +15,12 @@ public class Cell extends StackPane {
         this.row = row;
         this.element = null;
 
+        /*
+         Permet de faire une grille entre chaque cellule s'il n'y
+         a pas de fond
+         */
         getStyleClass().add("cell");
         setOpacity(0.9);
-    }
-
-    public void clearCell() {
-        getStyleClass().add("cell-clear");
     }
 
     public void setElement(Element element) {

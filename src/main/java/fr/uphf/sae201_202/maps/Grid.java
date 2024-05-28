@@ -10,9 +10,11 @@ public class Grid extends Pane {
     private final int rows;
     private final int columns;
 
+    // taille de la fenêtre
     private final double width;
     private final double height;
 
+    // toutes les cellules sont stockées dedans
     Cell[][] cells;
 
     public Grid(int columns, int rows, double width, double height) {
@@ -37,6 +39,10 @@ public class Grid extends Pane {
         cell.setPrefWidth(w);
         cell.setPrefHeight(h);
 
+        /*
+         grille étend de Pane, donc on peut ajouter des enfants.
+         On peut donc ajouter la cellule dedans.
+         */
         getChildren().add(cell);
     }
 
@@ -45,6 +51,7 @@ public class Grid extends Pane {
     }
 
     public List<Cell> getAllCells() {
+        // Permet de transformer le tableau de cellules en liste de cellules
         List<Cell> allCells = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {

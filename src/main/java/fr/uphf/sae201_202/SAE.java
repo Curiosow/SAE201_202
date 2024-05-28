@@ -20,6 +20,7 @@ import java.util.Random;
 
 public class SAE extends Application {
 
+    // Permet de récupérer l'instance du main (SAE) qui va nous servir dans les différentes classes
     private static SAE INSTANCE;
 
     private Map map;
@@ -32,6 +33,8 @@ public class SAE extends Application {
         map = new Map();
 
         Pane group = new Pane();
+
+        // Bouton de démarrage du jeu
         InputStream is_start = getClass().getResourceAsStream("/img/Start.png");
         if(is_start == null) {
             System.out.println("ERROR IN LOADING START BUTTON IMAGE");
@@ -43,6 +46,7 @@ public class SAE extends Application {
         start.setY(30);
         start.setX(170);
 
+        // Fond d'écran de l'écran de démarrage
         InputStream bgFile = getClass().getResourceAsStream("/img/backgroundmine.png");
         if(bgFile == null) {
             System.out.println("ERROR IN LOADING BACKGROUND IMAGE");
@@ -55,8 +59,10 @@ public class SAE extends Application {
 
         group.setBackground(background);
 
+        // Définit l'initilisation de la carte, la création des robots et le début de la partie
         start.setOnMouseClicked(event -> {
             Stage gameStage = new Stage();
+            // Fait en sorte qu'on ne puisse pas redimensionner la fenêtre pour éviter d'avoir du vide
             gameStage.setResizable(false);
             gameStage.setOnCloseRequest(closeEvent -> System.exit(0));
             try {
@@ -104,6 +110,7 @@ public class SAE extends Application {
         Cell cell = Utils.getRandomCell(map.getGrid());
         Bot bot = new Bot(ores);
 
+        // Définition de l'image du robot
         InputStream file = SAE.get().getClass().getResourceAsStream("/img/bot.png");
         if(file == null) {
             System.out.println("ERROR IN LOADING BOT IMAGE");
@@ -114,10 +121,13 @@ public class SAE extends Application {
         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
           BackgroundSize.DEFAULT)));
         bots.add(bot);
+
+        // L'id de la cellule permet d'identifier celle-ci comme un robot
         cell.setId("bot");
         bot.setPos(cell.getRow(), cell.getColumn());
         cell.setOnMouseClicked(event -> {
             try {
+                // Démarre l'interface de contrôle du robot en mode manuel
                 bot.start(new Stage());
             } catch (Exception e) {
                 System.out.println("THERE WAS A PROBLEM TO CREATE THE BOT GUI");

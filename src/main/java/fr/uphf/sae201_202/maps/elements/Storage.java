@@ -5,6 +5,7 @@ import fr.uphf.sae201_202.SAE;
 public class Storage extends Element {
 
     private final Ores ores;
+    // minerais stockés dans le stockage
     private int amount;
 
     public Storage(Ores ores) {

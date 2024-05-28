@@ -1,10 +1,15 @@
 package fr.uphf.sae201_202.maps.elements;
 
+/*
+Element est une classe abstraite à laquelle chaque élement de notre
+map l'utilise pour faire un objet.
+ */
 public abstract class Element {
 
     protected int id;
     private int posX;
     private int posY;
+    // variable qui vérifie si un robot peut se déplacer sur l'élement ou non
     private boolean canMoveIn;
 
     public Element() {
