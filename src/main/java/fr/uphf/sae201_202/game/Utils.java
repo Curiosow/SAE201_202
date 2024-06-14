@@ -1,5 +1,6 @@
-package fr.uphf.sae201_202;
+package fr.uphf.sae201_202.game;
 
+import fr.uphf.sae201_202.SAE;
 import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.Grid;
 import fr.uphf.sae201_202.maps.elements.Element;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -93,27 +96,7 @@ public class Utils {
         return arrow;
     }
 
-    // Fonction permettant d'effectuer l'action de déplacement
-    public static void actionMoving(Bot bot, String action) {
-        Grid grid = SAE.get().getMap().getGrid();
-        Cell cell = grid.getCell(bot.getPosY(), bot.getPosX());
-
-        String[] actionParts = action.split("/");
-        String axis = actionParts[0];
-        String direction = actionParts[1];
-
-        Cell newCell = move(bot, axis, direction, cell, grid);
-        if(newCell == null) {
-            System.out.println("CELL NOT EXIST!");
-            return;
-        }
-
-        // Si l'élement n'est pas nul et qu'on ne peut pas se déplacer dessus ou que c'est un bot qui est présent sur la cellule
-        if((newCell.getElement() != null && !newCell.getElement().isCanMoveIn()) || (newCell.getId() != null && newCell.getId().equals("bot"))) {
-            System.out.println("IMPOSSIBLE MOVING");
-            return;
-        }
-
+    public static void moveToCell(Bot bot, Cell cell, Cell newCell) {
         // L'ancienne cellule est vidée
         cell.setBackground(null);
         cell.setId(null);
@@ -162,6 +145,37 @@ public class Utils {
         });
         newCell.setId("bot");
         bot.setPos(newCell.getRow(), newCell.getColumn());
+        for(Cell cells : getAdjacentCells(bot)) {
+            if(SAE.get().getBotKnowsCells().contains(cells))
+                continue;
+
+            SAE.get().getBotKnowsCells().add(cells);
+            cells.getStyleClass().remove("unknowCase");
+        }
+    }
+
+    // Fonction permettant d'effectuer l'action de déplacement
+    public static void actionMoving(Bot bot, String action) {
+        Grid grid = SAE.get().getMap().getGrid();
+        Cell cell = grid.getCell(bot.getPosY(), bot.getPosX());
+
+        String[] actionParts = action.split("/");
+        String axis = actionParts[0];
+        String direction = actionParts[1];
+
+        Cell newCell = move(bot, axis, direction, cell, grid);
+        if(newCell == null) {
+            System.out.println("CELL NOT EXIST!");
+            return;
+        }
+
+        // Si l'élement n'est pas nul et qu'on ne peut pas se déplacer dessus ou que c'est un bot qui est présent sur la cellule
+        if((newCell.getElement() != null && !newCell.getElement().isCanMoveIn()) || (newCell.getId() != null && newCell.getId().equals("bot"))) {
+            System.out.println("IMPOSSIBLE MOVING");
+            return;
+        }
+
+        moveToCell(bot, cell, newCell);
     }
 
     // Fonction permettant de récupérer la cellule par rapport à une cellule, l'axe, la direction et la grille
@@ -231,6 +245,50 @@ public class Utils {
         bot.setHarvest(0);
         System.out.println("STORAGING: STORE x" + amount + " " + bot.getOres().name());
         System.out.println("STORAGING: DONE!");
+    }
+
+    public static List<Cell> getAdjacentCells(Cell cell) {
+        List<Cell> adjacentCells = new ArrayList<>();
+
+        Grid grid = SAE.get().getMap().getGrid();
+        int posX = cell.getRow();
+        int posY = cell.getColumn();
+
+        // Cellule à gauche
+        if (posX > 0) {
+            adjacentCells.add(grid.getCell(posY, posX - 1));
+        }
+
+        // Cellule à droite
+        if (posX < grid.getColumns() - 1) {
+            adjacentCells.add(grid.getCell(posY, posX + 1));
+        }
+
+        // Cellule en haut
+        if (posY > 0) {
+            adjacentCells.add(grid.getCell(posY - 1, posX));
+        }
+
+        // Cellule en bas
+        if (posY < grid.getRows() - 1) {
+            adjacentCells.add(grid.getCell(posY + 1, posX));
+        }
+
+        return adjacentCells;
+    }
+
+    // Fonction pour avoir les 4 cases autour du bot
+    public static List<Cell> getAdjacentCells(Bot bot) {
+        return getAdjacentCells(SAE.get().getMap().getGrid().getCell(bot.getPosY(), bot.getPosX()));
+    }
+
+    // Calcule la distance estimée entre deux cases
+    public static double calculateDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
+    public static double calculateDistance(Cell cell1, Cell cell2) {
+        return calculateDistance(cell1.getColumn(), cell1.getRow(), cell2.getColumn(), cell2.getRow());
     }
 
 }

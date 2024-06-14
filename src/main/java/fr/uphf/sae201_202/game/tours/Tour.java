@@ -1,8 +1,13 @@
-package fr.uphf.sae201_202;
+package fr.uphf.sae201_202.game.tours;
 
+import fr.uphf.sae201_202.SAE;
+import fr.uphf.sae201_202.game.Bot;
+import fr.uphf.sae201_202.game.Utils;
 import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.elements.Mine;
 import fr.uphf.sae201_202.maps.elements.Storage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -10,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -69,7 +75,66 @@ public class Tour extends Application {
                 Button createATour = new Button("Faire un tour");
                 createATour.setLayoutY(20);
                 createATour.setOnMouseClicked(event -> makeNewTour());
-                group.getChildren().addAll(noTourLabel, createATour);
+
+                Button createAnAutomaticTour = new Button("Faire un tour automatique (Dijstra)");
+                createAnAutomaticTour.setLayoutY(50);
+                createAnAutomaticTour.setOnMouseClicked(event -> {
+                    try {
+                        new AutomaticTour(this, true);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                Button createAnAutomaticTourAStar = new Button("Faire un tour automatique (A*)");
+                createAnAutomaticTourAStar.setLayoutY(80);
+                createAnAutomaticTourAStar.setOnMouseClicked(event -> {
+                    try {
+                        new AutomaticTour(this, false);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                Button createAnAutomaticGame = new Button("Faire la partie automatique");
+                createAnAutomaticGame.setLayoutY(110);
+                createAnAutomaticGame.setOnMouseClicked(event -> {
+                    Timeline[] timeline = new Timeline[1];
+                    timeline[0] = new Timeline(new KeyFrame(Duration.seconds(0.5), timeEvent -> {
+                        try {
+                            new AutomaticTour(this, true);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        boolean goodMine = true;
+                        boolean goodBot = true;
+                        for(Mine mine : SAE.get().getMap().getMines()) {
+                            if(mine.getOreLess() > 0) {
+                                goodMine = false;
+                                break;
+                            }
+                        }
+                        if(goodMine) {
+                            for(Bot bot : SAE.get().getBots()) {
+                                if(bot.getHarvest() > 0) {
+                                    goodBot = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if(goodBot && goodMine) {
+                            System.out.println("Game finished");
+                            timeline[0].stop();
+                        }
+                    }));
+
+                    timeline[0].setCycleCount(10000);
+                    timeline[0].play();
+                });
+
+                group.getChildren().addAll(noTourLabel, createATour, createAnAutomaticTour, createAnAutomaticTourAStar, createAnAutomaticGame);
             } else {
                 if(botInTour.isEmpty()) {
                     inTour = false;
@@ -188,5 +253,11 @@ public class Tour extends Application {
     }
     public boolean isHasDoneAction() {
         return hasDoneAction;
+    }
+    public void setNbrTour(int nbrTour) {
+        this.nbrTour = nbrTour;
+    }
+    public void setBotInTour(List<Bot> botInTour) {
+        this.botInTour = botInTour;
     }
 }

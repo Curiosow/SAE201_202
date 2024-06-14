@@ -1,5 +1,6 @@
-package fr.uphf.sae201_202;
+package fr.uphf.sae201_202.game;
 
+import fr.uphf.sae201_202.SAE;
 import fr.uphf.sae201_202.maps.elements.Element;
 import fr.uphf.sae201_202.maps.elements.Mine;
 import fr.uphf.sae201_202.maps.elements.Ores;

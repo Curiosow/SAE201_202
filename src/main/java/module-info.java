@@ -10,4 +10,8 @@ module fr.uphf.sae201_202 {
     opens fr.uphf.sae201_202.maps to javafx.fxml;
     exports fr.uphf.sae201_202.maps.elements;
     opens fr.uphf.sae201_202.maps.elements to javafx.fxml;
+    exports fr.uphf.sae201_202.game;
+    opens fr.uphf.sae201_202.game to javafx.fxml;
+    exports fr.uphf.sae201_202.game.tours;
+    opens fr.uphf.sae201_202.game.tours to javafx.fxml;
 }

@@ -1,5 +1,8 @@
 package fr.uphf.sae201_202;
 
+import fr.uphf.sae201_202.game.Bot;
+import fr.uphf.sae201_202.game.tours.Tour;
+import fr.uphf.sae201_202.game.Utils;
 import fr.uphf.sae201_202.maps.Cell;
 import fr.uphf.sae201_202.maps.Map;
 import fr.uphf.sae201_202.maps.elements.Ores;
@@ -10,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -26,11 +28,13 @@ public class SAE extends Application {
     private Map map;
     private List<Bot> bots;
     private Tour tour;
+    private List<Cell> botKnowsCells;
 
     @Override
     public void start(Stage stage) throws Exception {
         INSTANCE = this;
         map = new Map();
+        botKnowsCells = new ArrayList<>();
 
         Pane group = new Pane();
 
@@ -77,6 +81,11 @@ public class SAE extends Application {
                 createBots();
             } catch (Exception e) {
                 System.out.println("CAN'T CREATE BOTS.");
+            }
+
+            for(Cell cell : botKnowsCells) {
+                System.out.println("REMOVING FOR " + cell.toString());
+                cell.getStyleClass().remove("unknowCase");
             }
 
             gameStage.show();
@@ -135,6 +144,8 @@ public class SAE extends Application {
             }
         });
         System.out.println("PLACED A BOT OF " + cell.getRow() + "/" + cell.getColumn());
+        botKnowsCells.addAll(Utils.getAdjacentCells(bot));
+        botKnowsCells.add(map.getGrid().getCell(bot.getPosY(), bot.getPosX()));
     }
 
     public static void main(String[] args) {
@@ -156,5 +167,8 @@ public class SAE extends Application {
     }
     public Tour getTour() {
         return tour;
+    }
+    public List<Cell> getBotKnowsCells() {
+        return botKnowsCells;
     }
 }

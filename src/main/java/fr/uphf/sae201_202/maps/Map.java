@@ -1,16 +1,13 @@
 package fr.uphf.sae201_202.maps;
 
 import fr.uphf.sae201_202.SAE;
-import fr.uphf.sae201_202.Tour;
-import fr.uphf.sae201_202.Utils;
+import fr.uphf.sae201_202.game.Utils;
 import fr.uphf.sae201_202.maps.elements.*;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -77,6 +74,7 @@ public class Map {
         for (int row = 0; row < lignes; row++) {
             for (int column = 0; column < colonnes; column++) {
                 Cell cell = new Cell(column, row);
+                cell.getStyleClass().add("unknowCase");
                 grid.add(cell, column, row);
             }
         }
