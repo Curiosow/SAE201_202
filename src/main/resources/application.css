@@ -6,3 +6,7 @@
 .flash {
     -fx-background-color: dodgerblue;
 }
+
+.unknowCase {
+    -fx-background-color: #3d3b3b;
+}
