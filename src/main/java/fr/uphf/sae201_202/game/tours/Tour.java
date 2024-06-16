@@ -80,29 +80,19 @@ public class Tour extends Application {
                 createAnAutomaticTour.setLayoutY(50);
                 createAnAutomaticTour.setOnMouseClicked(event -> {
                     try {
-                        new AutomaticTour(this, true);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
-                Button createAnAutomaticTourAStar = new Button("Faire un tour automatique (A*)");
-                createAnAutomaticTourAStar.setLayoutY(80);
-                createAnAutomaticTourAStar.setOnMouseClicked(event -> {
-                    try {
-                        new AutomaticTour(this, false);
+                        new AutomaticTour(this);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 });
 
                 Button createAnAutomaticGame = new Button("Faire la partie automatique");
-                createAnAutomaticGame.setLayoutY(110);
+                createAnAutomaticGame.setLayoutY(80);
                 createAnAutomaticGame.setOnMouseClicked(event -> {
                     Timeline[] timeline = new Timeline[1];
-                    timeline[0] = new Timeline(new KeyFrame(Duration.seconds(0.5), timeEvent -> {
+                    timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), timeEvent -> {
                         try {
-                            new AutomaticTour(this, true);
+                            new AutomaticTour(this);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -134,7 +124,7 @@ public class Tour extends Application {
                     timeline[0].play();
                 });
 
-                group.getChildren().addAll(noTourLabel, createATour, createAnAutomaticTour, createAnAutomaticTourAStar, createAnAutomaticGame);
+                group.getChildren().addAll(noTourLabel, createATour, createAnAutomaticTour, createAnAutomaticGame);
             } else {
                 if(botInTour.isEmpty()) {
                     inTour = false;

@@ -106,12 +106,12 @@ public class SAE extends Application {
         System.out.println("--------- PLACING BOTS ---------");
         createBot(Ores.GOLD);
         createBot(Ores.NICKEL);
-        int supBot = new Random().nextInt(4);
+        /*int supBot = new Random().nextInt(4);
         for(int i = 0; i < supBot; i++) {
             List<Ores> ores = new ArrayList<>(List.of(Ores.values()));
             Collections.shuffle(ores);
             createBot(ores.getFirst());
-        }
+        }*/
         System.out.println("--------------------------------");
     }
 

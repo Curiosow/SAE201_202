@@ -14,11 +14,9 @@ import java.util.Random;
 public class AutomaticTour {
 
     private final Tour baseSystem;
-    private final boolean dijstra;
 
-    public AutomaticTour(Tour tour, boolean dijstra) throws InterruptedException {
+    public AutomaticTour(Tour tour) throws InterruptedException {
         this.baseSystem = tour;
-        this.dijstra = dijstra;
         this.baseSystem.setNbrTour(this.baseSystem.getNbrTour() + 1);
         this.baseSystem.setBotInTour(new ArrayList<>(SAE.get().getBots()));
 
@@ -54,15 +52,14 @@ public class AutomaticTour {
         if(action.startsWith("search")) {
             Cell selected = mostShortPath(bot, action);
             List<Cell> nextCell;
-            if(dijstra)
-                nextCell = Dijstra.pathFinder(actualCell, selected);
-            else
-                nextCell = AStar.pathFinder(actualCell, selected);
+            nextCell = Dijstra.pathFinder(actualCell, selected);
 
-            if(nextCell.isEmpty()) {
+            if(nextCell.isEmpty() || nextCell.size() == 1) {
                 System.out.println("[ERROR] None path finded.");
                 return;
             }
+            nextCell.removeFirst();
+
             System.out.println("Finded a path : ");
             nextCell.forEach(c -> System.out.println("  - " + c.toString()));
             System.out.println("Next cell -> " + nextCell.getFirst().toString());
@@ -172,6 +169,11 @@ public class AutomaticTour {
 
         if(elementList.isEmpty()) {
             System.out.println("[ERROR] Elements list is empty!");
+            System.out.println("[WARN] Random moving to not block the element");
+            Random random = new Random();
+            boolean xory = random.nextBoolean();
+            boolean m1orp1 = random.nextBoolean();
+            Utils.actionMoving(bot, (xory ? "X" : "Y") + "/" + (m1orp1 ? "-" : "+"));
             return null;
         }
 
