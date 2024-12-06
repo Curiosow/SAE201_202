@@ -1,5 +1,3 @@
-# ⚠︎ L'ancien repo. ayant eu un souci, nous avons du le re-créer ⚠︎
-
 # S2.01 & S2.02
 
 Projet JavaFx codé sur IntelliJ maintenu sous GitHub. 
